@@ -17,10 +17,9 @@ def extract(src):
 			rgb = [r, g, b]
 			for c in rgb:
 				if index == 7:
-					char = chr(int(binary, 2))
-					m = re.match(r"[a-zA-Z0-9]", char)
-					if len(char) == 1 and m:
-						arr.append(char)
+					codepoint = int(binary, 2)
+					t = chr(codepoint)
+					arr.append(t)
 					binary = ''
 					index = 0
 				binary += bin(c)[len(bin(c))-1]

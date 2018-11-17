@@ -1,20 +1,18 @@
 from PIL import Image
 import os
 import sys
+import re
 
 dir = os.path.dirname(__file__)
 img_path = os.path.join(dir, "img/img.png")
 
 def hidden_keys(text):
-	b_text_arr = [bin(ord(t)) for t in text]
+	codepoints = [hex(ord(t))[2:] for t in text]
 	keys = []
-	index = 0
-	for uc in b_text_arr:
-		index = 0
-		for c in list(str(uc)):
-			if index > 1:
-				keys.append(int(c))
-			index = index + 1
+	for h1 in codepoints:
+		binary = bin(int(str(h1), 16))[2:].zfill(7)
+		for b1 in list(str(binary)):
+			keys.append(b1)
 
 	return keys
 
@@ -27,27 +25,29 @@ def generate(text):
 
 	im2 = Image.new("RGB", im_size)
 
-	i = 0
+	i_1 = 0
 	for x in range(im_size[0]):
 		for y in range(im_size[1]):
 			r, g, b = rgb_im.getpixel((x, y))
-			if i < len(keys):
-				new_rb = bin(r)[:-1] + str(keys[i])
-				r = int(new_rb, 2)
-				i = i + 1
 
-			if i < len(keys):
-				g = int(bin(g)[:-1] + str(keys[i]), 2)
-				i = i + 1
+			rgb = [r, g, b]
+			for i_2 in range(len(rgb)):
+				c = rgb[i_2]
+				if i_1 < len(keys):
+					c_b = bin(c)[:-1] + str(keys[i_1])
+					rgb[i_2] = (int(c_b, 2))
+					i_1 = i_1 + 1
 
-			if i < len(keys):
-				b = int(bin(b)[:-1] + str(keys[i]), 2)
-				i = i + 1
+				if i_1 == len(keys):
+					i_1 = 0
+
+			r = rgb[0]
+			g = rgb[1]
+			b = rgb[2]
 
 			im2.putpixel((x,y),(r,g,b,0))
 
 	im2.save(os.path.join(dir, "img/output.png"))
 
 if __name__ == '__main__':
-	args = sys.argv
-	generate(args[1])
+	generate("  great!!  ")
