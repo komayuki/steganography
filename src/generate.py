@@ -50,4 +50,4 @@ def generate(text):
 	im2.save(os.path.join(dir, "img/output.png"))
 
 if __name__ == '__main__':
-	generate("  great!!  ")
+	generate("  great!! pass: hogehogeman!  ")

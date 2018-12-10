@@ -29,4 +29,6 @@ def extract(src):
 
 if __name__ == '__main__':
 	args = sys.argv
-	extract(args[1])
+	dir = os.path.dirname(__file__)
+	img_path = os.path.join(dir, args[1])
+	extract(img_path)
