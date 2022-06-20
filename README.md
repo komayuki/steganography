@@ -1,9 +1,9 @@
-# ninja
+# steganography
 steganography
 
 ## Usage
 ```
-https://github.com/komayuki/ninja.git   
+https://github.com/komayuki/steganography.git   
 
 
 python src/generate.py
